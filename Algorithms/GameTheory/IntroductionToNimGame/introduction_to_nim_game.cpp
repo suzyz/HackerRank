@@ -6,22 +6,27 @@
 using namespace std;
 
 int main() {
-
-	freopen("tower_breakers.in","r",stdin);
-	freopen("tower_breakers.out","w",stdout);
-
-	int T,n,m;
+	
+	int T,n;
 	scanf("%d",&T);
 
 while(T)
 {
 	T--;
 
-	scanf("%d%d",&n,&m);
-	if(m==1 || (n&1)==0)
-		printf("2\n");
+	scanf("%d",&n);
+
+	int ans=0,s;
+	for(int i=1;i<=n;i++)
+	{
+		scanf("%d",&s);
+		ans^=s;
+	}
+
+	if(ans==0)
+		printf("Second\n");
 	else
-		printf("1\n");
+		printf("First\n");
 }
 
     return 0;
