@@ -1,27 +1,23 @@
-nclude <bits/stdc++.h>
+#include <iostream>
+#include <cstring>
 
 using namespace std;
 
 string timeConversion(string s) {
-    if(strncmp(s.c_str(),"12:00:00",8)==0)
-    {
-        if(s[8]=='A') return "00:00:00";
-        else return "12:00:00";
-    }
     
     string t(s,0,8);
+
+    int h = (s[0]-'0')*10 + s[1]-'0';
     
-    if(s[8]=='A')
-    {
-        t[0]=s[0];
-        t[1]=s[1];
-    }
+    if(s[8]=='A' && h==12)
+        h=0;
     else
-    {
-        int h = (s[0]-'0')*10 + s[1]-'0' + 12;
-        t[0] = '0' + h/10;
-        t[1] = '0' + h%10;
-    }
+    if(s[8]=='P' && h<12)
+        h+=12;
+
+    t[0] = '0' + h/10;
+    t[1] = '0' + h%10;
+
     return t;
 }
 
