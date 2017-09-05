@@ -6,7 +6,7 @@
 #include <utility>  /* pair */
 
 using namespace std;
-const int maxn = 1002;
+const int maxn = 1030;
 
 int n,m,kk,tot;
 int fish[maxn],cost[maxn][maxn];
@@ -32,7 +32,7 @@ void init()
 {
 	for(int i=1;i<=n;i++)
 		for(int j=0;j<tot;j++)
-			cost[i][j]=INT_MAX>>1;
+			cost[i][j]=INT_MAX;
 }
 
 void dij()
@@ -56,7 +56,7 @@ void dij()
 
 		for(int i=0;i<g[x].size();i++)
 		{
-			tmp = g[x][y];
+			tmp = g[x][i];
 			update(tmp.first,y|fish[tmp.first],z+tmp.second);
 		}
 	}
@@ -65,7 +65,6 @@ void dij()
 int main() {
 
 	freopen("a.in","r",stdin);
-	// freopen("a.out","w",stdout);
 
 	int x,y,z;
 	scanf("%d%d%d",&n,&m,&kk);
@@ -104,9 +103,6 @@ int main() {
 			}
 
 	printf("%d\n", ans);
-
-	// for(int i=0;i<tot;i++)
-	// 	printf("%d\n", cost[n][i]);
 
     return 0;
 }
