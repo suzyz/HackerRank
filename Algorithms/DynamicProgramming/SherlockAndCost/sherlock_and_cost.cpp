@@ -1,44 +1,42 @@
 #include <cstdio>
 #include <iostream>
 #include <cstring>
-#include <cstdlib>
+#include <cstdlib> /* abs */
+#include <cmath>
 using namespace std;
-
-const int maxn = 100002;
-
-int n;
-int data[maxn],f[maxn][102];
 
 int main()
 {
-    int T;
+    freopen("a.in","r",stdin);
+    freopen("a.out","w",stdout);
+
+    int T,n,cur,pre,lo_hi,lo_lo,hi_lo,hi_hi,best_lo,best_hi,new_best_lo,new_best_hi;
     scanf("%d",&T);
 
 while(T)
 {
     T--;
-    memset(f,0,sizeof(f));
 
-    int n;
+    best_lo = best_hi = lo_hi = hi_lo = lo_lo = hi_hi = 0;
     scanf("%d",&n);
-    for(int i=1;i<=n;i++)
-        scanf("%d",&data[i]);
-
+    scanf("%d",&pre);
     for(int i=2;i<=n;i++)
-        for(int j=1;j<=data[i];j++)
-        {
-            for(int k=1;k<=data[i-1];k++)
-            {
-                int tmp=f[i-1][k]+abs(j-k);
-                f[i][j]=tmp>f[i][j] ? tmp:f[i][j];
-            }
-        }
+    {
+        scanf("%d",&cur);
+        lo_lo=0; /* 1 - 1 */
+        lo_hi=cur-1;
+        hi_lo=pre-1;
+        hi_hi=abs(cur-pre);
 
-    int ans=0;
-    for(int j=1;j<=data[n];j++)
-        ans=f[n][j]>ans ? f[n][j]:ans;
+        new_best_lo = max(best_lo,best_hi + hi_lo);
+        new_best_hi = max(best_lo + lo_hi,best_hi + hi_hi);
 
-    printf("%d\n", ans);
+        best_lo = new_best_lo;
+        best_hi = new_best_hi;
+        pre=cur;
+    }
+
+    printf("%d\n",best_lo > best_hi ? best_lo:best_hi);
 }
    
     return 0;
