@@ -5,7 +5,7 @@ using namespace std;
 
 long long calc(long long x)
 {
-	for(int i=0;i<32;i++)
+	for(int i=0;i<33;i++)
 		if((((long long)1)<<i)>=x)
 			return ((long long)1)<<i;
 
@@ -14,6 +14,9 @@ long long calc(long long x)
 
 int main()
 {
+	freopen("a.in","r",stdin);
+	//freopen("a.out","w",stdout);
+
 	int T;
 	long long l,r;
 	scanf("%d",&T);
@@ -27,12 +30,13 @@ while(T)
 	if(st<=r)
 	 	ans=st;
 	else
-	 	ans=l;
+		st=ans=l;
 
-	for(int i=st+1;i<=r;i++)
+	for(long long i=st+1;i<=r;i++)
 	   	ans&=i;
 
     printf("%lld\n", ans);
+    //printf("T:%d\n",T);
 }
 
     return 0;
