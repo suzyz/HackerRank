@@ -1,5 +1,5 @@
 let rec get_length_of_common_prefix x y i = 
-	if List.length x <= i || List.length y <= i then
+	if String.length x <= i || String.length y <= i then
 		i
 	else
 		if x.[i] = y.[i] then
@@ -8,22 +8,15 @@ let rec get_length_of_common_prefix x y i =
 			i
 ;;
 
-let print s st en =
-	Printf.printf "%d " (en-st+1);
-	if st <= en then
-	(
-		for i = st to en do
-			Printf.printf "%c" s.[i]
-		done
-	);
-	Printf.printf "\n"
-;;
-
 let () =
 	let x = Scanf.scanf " %s " (fun x -> x) in
 	let y = Scanf.scanf " %s " (fun x -> x) in
 	let prefix_length = get_length_of_common_prefix x y 0 in
-		print x 0 (prefix_length-1);
-		print x prefix_length ((List.length x)-1);
-		print y prefix_length ((List.length y)-1)
+		let prefix = String.sub x 0 prefix_length in
+			Printf.printf "%d %s\n" prefix_length prefix;
+			let len1 = (String.length x)-prefix_length in
+			let len2 = (String.length y)-prefix_length in
+			let x1 = String.sub x prefix_length len1 in
+			let y1 = String.sub y prefix_length len2 in
+				Printf.printf "%d %s\n%d %s\n" len1 x1 len2 y1
 ;;
