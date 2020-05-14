@@ -1,45 +1,50 @@
-#include <cstdio>
 #include <iostream>
 #include <climits>
-#include <cstring>
+#include <string>
+#include <vector>
+#include <cctype>
 using namespace std;
-
-bool f[1002][1002];
 
 int main()
 {
-	freopen("a.in","r",stdin);
-	freopen("a.out","w",stdout);
+    int T;
+    cin >> T;
 
-	int T;
-	scanf("%d",&T);
 while(T)
 {
-	T--;
+    T--;
 
-	char a[1002],b[1002];
-	scanf("%s%s",a,b);
+    string a, b;
+    cin >> a >> b;
 
-	int la = strlen(a), lb = strlen(b);
+    int n = a.length(), m = b.length();
+    if (n < m) {
+        cout << "NO" << endl;
+        continue;
+    }
 
-	memset(f,0,sizeof(f));
-	for(int i=0;i<la;i++)
-		for(int j=0;j<lb;j++)
-		{
-			if(a[i]==b[j] || (a[i]>='a' && a[i]-'a'+'A'==b[j]))
-			{
-				if(i>0 && j>0)
-					f[i][j]|=f[i-1][j-1];
-				else
-				if(j==0)
-					f[i][j]=true;		
-			}
-			if(a[i]>='a' && i>j) f[i][j]|=f[i-1][j];
-		}
+    vector<vector<bool>> f(n+1, vector<bool>(m+1));
 
-	if(f[la-1][lb-1]) printf("YES\n");
-	else printf("NO\n");
+    f[0][0] = true;
+    for (int i = 1; i <= n && islower(a[i-1]); ++i)
+        f[i][0] = true;
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= min(m, i); ++j) {
+            if (islower(a[i-1]))
+                f[i][j] = f[i][j] || f[i-1][j];
+
+            if (toupper(a[i-1]) == b[j-1])
+                f[i][j] = f[i][j] || f[i-1][j-1];
+
+            // printf("%d %d: %d\n", i, j, (int)f[i][j]);
+        }
+    }
+
+    if(f[n][m])
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
-
     return 0;
 }
